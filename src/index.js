@@ -1,31 +1,29 @@
+import { ConsoleLogger } from 'nightingale';
 import { EventEmitter } from 'events';
 import compose from './compose';
 import context from './context';
+
+const logger = new ConsoleLogger('ibex');
 
 export default class Application extends EventEmitter {
     constructor() {
         super();
         this.middleware = [];
         this.context = Object.create(context);
-        this._initPromises = [];
     }
 
     get environment() {
         return this.env;
     }
 
-    init(fn) {
-        this._initPromises.push(fn(this));
-    }
-
     use(fn) {
-        // logger.debug('use', {name: fn._name || fn.name || '-'});
+        logger.debug('use', { name: fn.name || '-' });
         this.middleware.push(fn);
         return this;
     }
 
     onerror(e) {
-        console.log(e.stack || e.message || e); // eslint-disable-line no-console
+        logger.error(e);
     }
 
     run() {
@@ -41,6 +39,8 @@ export default class Application extends EventEmitter {
     }
 
     load(url) {
+        logger.debug('load', { url });
+
         if (url.startsWith('?')) {
             url = window.location.pathname + url;
         }
