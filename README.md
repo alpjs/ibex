@@ -1,5 +1,7 @@
 # ibex [![NPM version][npm-image]][npm-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/alpjs/ibex.svg)](https://greenkeeper.io/)
+
 Framework for browser, with the same API than koa 2
 
 [![Dependency ci Status][dependencyci-image]][dependencyci-url]
